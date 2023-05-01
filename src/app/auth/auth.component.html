@@ -1,0 +1,19 @@
+<div class="wrapper">
+  <div class="left"></div>
+  <div class="right">
+    <form #authForm="ngForm">
+      <div>
+        <label for="email">Email</label>
+        <input ngModel id="email" name="email" type="email" required email />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input ngModel id="password" name="password" type="password" required [minlength]="8" />
+      </div>
+      <div>
+        <button (click)="onLogin(authForm)">Login</button>
+        <button (click)="onSignup(authForm)">Signup</button>
+      </div>
+    </form>
+  </div>
+</div>
