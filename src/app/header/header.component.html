@@ -4,7 +4,8 @@
     <li><a href="">Transactions</a></li>
     <li><a href="">Add transaction</a></li>
   </ul>
-  <div>
-    <button *ngIf="authService.isLoggedIn$ | async" (click)="authService.logout()">Logout</button>
+  <div *ngIf="authService.isLoggedIn$ | async">
+    <button (click)="authService.logout()">Logout</button>
+    <span>Welcome, {{ (authService.user$ | async)?.email }}</span>
   </div>
 </div>
