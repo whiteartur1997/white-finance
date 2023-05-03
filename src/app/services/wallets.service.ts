@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Wallet} from "../models/wallet";
-import {BehaviorSubject, filter, Observable, shareReplay} from "rxjs";
+import {BehaviorSubject, filter, map, Observable, shareReplay, tap} from "rxjs";
 import {AuthService} from "../auth/auth.service";
 
 @Injectable({
@@ -21,23 +21,33 @@ export class WalletsService {
       filter(user => !!user),
     ).subscribe((user) => {
       if(user) {
-        this.userId = user.idToken
+        console.log(user);
+        this.userId = user.localId
       }
     })
   }
 
   getWallets(): Observable<Wallet[]> {
-      return this.http.get<Wallet[]>(this.walletURL, {
+      return this.http.get<{ [key: string]: Wallet }>(this.walletURL, {
         params: {
-          orderBy: encodeURIComponent("userId"),
+          orderBy: '"userId"',
           equalTo: `"${this.userId!}"`
         }
       }).pipe(
+        map(wallets => {
+          return Object.entries(wallets).reduce((acc: Wallet[], [key, value]) => {
+            acc.push({ ...value, id: key})
+            return acc;
+          }, []) as Wallet[]
+        }),
+        tap((wallets) => this.walletsSubject.next(wallets)),
         shareReplay()
       )
   }
 
   createWallet(wallet: Wallet) {
-    this.http.post(this.walletURL, wallet)
+    this.http.post(this.walletURL, { ...wallet, userId: this.userId, }).subscribe(() => {
+      this.getWallets().subscribe()
+    });
   }
 }

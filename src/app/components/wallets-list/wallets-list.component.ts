@@ -13,10 +13,6 @@ export class WalletsListComponent implements OnInit {
   constructor(public walletsService: WalletsService) {}
 
   ngOnInit() {
-    this.loadWallets()
-  }
-
-  loadWallets() {
-    this.wallets$ = this.walletsService.getWallets()
+    this.walletsService.getWallets().subscribe()
   }
 }

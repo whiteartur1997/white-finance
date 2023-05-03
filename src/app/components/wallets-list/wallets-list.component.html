@@ -1,4 +1,4 @@
-<ul *ngIf="(wallets$ | async) as wallets">
+<ul *ngIf="(walletsService.wallets$ | async) as wallets">
   <li *ngFor="let wallet of wallets">
     <h3>Name - {{ wallet.name }} | {{ wallet.currency }}</h3>
     <span>Amount: {{ wallet.amount }}</span>
