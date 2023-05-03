@@ -1,2 +1,5 @@
 <app-header *ngIf="authService.isLoggedIn$ | async"></app-header>
-<router-outlet></router-outlet>
+<div class="app-container">
+  <router-outlet></router-outlet>
+</div>
+

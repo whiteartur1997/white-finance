@@ -5,24 +5,31 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
+import { CreateWalletFormComponent } from './components/create-wallet-form/create-wallet-form.component';
+import { WalletsListComponent } from './components/wallets-list/wallets-list.component';
+import {AuthInterceptorService} from "./services/auth-interceptor.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    CreateWalletFormComponent,
+    WalletsListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

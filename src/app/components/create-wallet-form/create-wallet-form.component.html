@@ -1,0 +1,23 @@
+<form #walletForm="ngForm">
+  <div class="formControl">
+    <label for="name">Name</label>
+    <input ngModel type="text" id="name" name="name" required />
+  </div>
+  <div class="formControl">
+    <label for="currency">Currency</label>
+    <select ngModel id="currency" name="currency">
+      <option value="UAH">&#8372;</option>
+      <option value="USD">$</option>
+      <option value="EUR">€</option>
+    </select>
+  </div>
+  <div class="formControl">
+    <label for="initBalance">Initial Balance</label>
+    <input ngModel type="number" id="initBalance" name="amount" />
+  </div>
+  <div class="btns">
+    <button class="cancel" (click)="walletForm.resetForm()">Cancel</button>
+    <button type="submit" (click)="onCreateWallet(walletForm)">Create</button>
+  </div>
+
+</form>
