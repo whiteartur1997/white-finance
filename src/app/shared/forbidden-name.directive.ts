@@ -7,8 +7,9 @@ import {Directive, Input} from "@angular/core";
 })
 export class ForbiddenNameDirective implements Validator {
   @Input('appForbiddenNames') forbiddenNames: string[] = [];
+  @Input('appCurrentName') currentName: string = '';
 
   validate(control: AbstractControl): ValidationErrors | null {
-    return this.forbiddenNames.includes(control.value) ? {forbiddenName: { value: control.value }} : null
+    return this.forbiddenNames.includes(control.value) && control.value !== this.currentName ? {forbiddenName: { value: control.value }} : null
   }
 }

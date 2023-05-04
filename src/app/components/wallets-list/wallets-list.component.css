@@ -33,3 +33,8 @@ button {
   align-items: flex-start;
 }
 
+.edit-wallet {
+  font-size: 36px;
+  margin-bottom: 12px;
+}
+

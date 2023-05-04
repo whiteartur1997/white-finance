@@ -51,8 +51,14 @@ export class WalletsService {
     });
   }
 
+  editWallet(wallet: Wallet) {
+    this.http.put(`${this.walletURL}/${wallet.id}.json`, {...wallet}).subscribe(() => {
+        this.getWallets().subscribe()
+    })
+  }
+
   deleteWallet(wallet: Wallet) {
-    this.http.delete(`https://white-finance-b9fce-default-rtdb.europe-west1.firebasedatabase.app/wallets/${wallet.id}.json`).subscribe(() => {
+    this.http.delete(`${this.walletURL}/${wallet.id}.json`).subscribe(() => {
       this.getWallets().subscribe()
     })
   }

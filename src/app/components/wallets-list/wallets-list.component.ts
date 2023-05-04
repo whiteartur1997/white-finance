@@ -27,6 +27,6 @@ export class WalletsListComponent implements OnInit {
 
   onEdit(modalId: string, wallet: Wallet) {
     this.modalService.open(modalId)
-    this.editedWallet = wallet
+    this.editedWallet = {...wallet}
   }
 }

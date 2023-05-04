@@ -12,8 +12,8 @@
 </ul>
 <app-modal id="modal-edit-wallet">
   <ng-container *ngIf="editedWallet">
-    <h3>Edit {{editedWallet?.name}}</h3>
-    <app-create-wallet-form [editMode]="true" [wallet]="editedWallet"></app-create-wallet-form>
+    <h3 class="edit-wallet">Edit wallet</h3>
+    <app-create-wallet-form [editMode]="true" [wallet]="editedWallet" (walletWasEdited)="editedWallet = null"></app-create-wallet-form>
   </ng-container>
 </app-modal>
 
