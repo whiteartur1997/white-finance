@@ -13,6 +13,15 @@ form {
   column-gap: 10px;
 }
 
+.formControlLabel {
+  display: flex;
+  justify-content: space-between;
+}
+
+.formControlLabel span {
+  color: red;
+}
+
 input, select {
   height: 30px;
   padding: 0 16px;

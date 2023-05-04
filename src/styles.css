@@ -52,6 +52,14 @@ table {
   box-sizing: border-box;
 }
 
+input.ng-touched.ng-invalid {
+  border: 1px solid red;
+}
+
+*:disabled {
+  opacity: .5;
+}
+
 /* VARIABLES */
 
 :root {

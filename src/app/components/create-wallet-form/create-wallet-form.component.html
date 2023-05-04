@@ -1,23 +1,47 @@
 <form #walletForm="ngForm">
   <div class="formControl">
-    <label for="name">Name</label>
-    <input ngModel type="text" id="name" name="name" required />
+    <div class="formControlLabel">
+      <label for="name">Name</label>
+      <ng-container *ngIf="name.invalid && (name.dirty || name.touched)">
+        <span *ngIf="name.errors?.['required']">Name is required</span>
+        <span *ngIf="name.errors?.['minlength']">Name should be at least 3 chars</span>
+        <span *ngIf="name.errors?.['forbiddenName']">You already have the wallet with such name</span>
+      </ng-container>
+    </div>
+    <input
+      ngModel
+      type="text"
+      id="name"
+      name="name"
+      #name="ngModel"
+      required
+      minlength="3"
+      appForbiddenName
+      [appForbiddenNames]="walletNames || []" />
   </div>
   <div class="formControl">
-    <label for="currency">Currency</label>
-    <select ngModel id="currency" name="currency">
+    <div class="formControlLabel">
+      <label for="currency">Currency</label>
+    </div>
+    <select id="currency" name="currency" ngModel [ngModel]="currency">
       <option value="UAH">&#8372;</option>
       <option value="USD">$</option>
       <option value="EUR">€</option>
     </select>
   </div>
   <div class="formControl">
-    <label for="initBalance">Initial Balance</label>
-    <input ngModel type="number" id="initBalance" name="amount" />
+    <div class="formControlLabel">
+      <label for="initBalance">Initial Balance</label>
+      <ng-container *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+        <span *ngIf="amount.errors?.['required']">Amount is required</span>
+        <span *ngIf="amount.errors?.['min']">Should be not less than 0</span>
+      </ng-container>
+    </div>
+    <input ngModel #amount="ngModel" type="number" id="initBalance" name="amount" [defaultValue]="0" required min="0" />
   </div>
   <div class="btns">
-    <button class="cancel" (click)="walletForm.resetForm()">Cancel</button>
-    <button type="submit" (click)="onCreateWallet(walletForm)">Create</button>
+    <button class="cancel" (click)="resetForm(walletForm)">Cancel</button>
+    <button type="submit" [disabled]="walletForm.invalid" (click)="onCreateWallet(walletForm)">Create</button>
   </div>
 
 </form>
