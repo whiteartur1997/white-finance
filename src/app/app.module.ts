@@ -12,6 +12,7 @@ import { CreateWalletFormComponent } from './components/create-wallet-form/creat
 import { WalletsListComponent } from './components/wallets-list/wallets-list.component';
 import {AuthInterceptorService} from "./services/auth-interceptor.service";
 import {ForbiddenNameDirective} from "./shared/forbidden-name.directive";
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {ForbiddenNameDirective} from "./shared/forbidden-name.directive";
     HeaderComponent,
     CreateWalletFormComponent,
     WalletsListComponent,
-    ForbiddenNameDirective
+    ForbiddenNameDirective,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,7 @@ import {AuthService} from "../auth/auth.service";
 })
 export class WalletsService {
 
-  private readonly walletURL = 'https://white-finance-b9fce-default-rtdb.europe-west1.firebasedatabase.app/wallets.json'
+  private readonly walletURL = 'https://white-finance-b9fce-default-rtdb.europe-west1.firebasedatabase.app/wallets'
   private walletsSubject = new BehaviorSubject<Wallet[]>([])
   wallets$ = this.walletsSubject.asObservable()
   private userId: string | undefined
@@ -28,7 +28,7 @@ export class WalletsService {
   }
 
   getWallets(): Observable<Wallet[]> {
-      return this.http.get<{ [key: string]: Wallet }>(this.walletURL, {
+      return this.http.get<{ [key: string]: Wallet }>(`${this.walletURL}.json`, {
         params: {
           orderBy: '"userId"',
           equalTo: `"${this.userId!}"`
@@ -46,8 +46,14 @@ export class WalletsService {
   }
 
   createWallet(wallet: Wallet) {
-    this.http.post(this.walletURL, { ...wallet, userId: this.userId, }).subscribe(() => {
+    this.http.post(`${this.walletURL}.json`, { ...wallet, userId: this.userId, }).subscribe(() => {
       this.getWallets().subscribe()
     });
+  }
+
+  deleteWallet(wallet: Wallet) {
+    this.http.delete(`https://white-finance-b9fce-default-rtdb.europe-west1.firebasedatabase.app/wallets/${wallet.id}.json`).subscribe(() => {
+      this.getWallets().subscribe()
+    })
   }
 }

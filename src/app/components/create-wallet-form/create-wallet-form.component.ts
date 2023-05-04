@@ -1,7 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {WalletsService} from "../../services/wallets.service";
 import {Subscription} from "rxjs";
+import {Wallet} from "../../models/wallet";
 
 @Component({
   selector: 'app-create-wallet-form',
@@ -9,6 +10,8 @@ import {Subscription} from "rxjs";
   styleUrls: ['./create-wallet-form.component.css']
 })
 export class CreateWalletFormComponent implements OnInit, OnDestroy {
+  @Input() editMode = false;
+  @Input() wallet: Partial<Wallet> = { name: '', currency: 'UAH', amount: 0 };
   currency = "UAH";
   walletsSub: Subscription | undefined
   public walletNames: string[] | undefined;
