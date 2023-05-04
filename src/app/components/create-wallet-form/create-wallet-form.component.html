@@ -9,7 +9,7 @@
       </ng-container>
     </div>
     <input
-      ngModel
+      [(ngModel)]="wallet.name"
       type="text"
       id="name"
       name="name"
@@ -23,7 +23,7 @@
     <div class="formControlLabel">
       <label for="currency">Currency</label>
     </div>
-    <select id="currency" name="currency" ngModel [ngModel]="currency">
+    <select id="currency" name="currency" ngModel [(ngModel)]="wallet.currency">
       <option value="UAH">&#8372;</option>
       <option value="USD">$</option>
       <option value="EUR">€</option>
@@ -37,11 +37,19 @@
         <span *ngIf="amount.errors?.['min']">Should be not less than 0</span>
       </ng-container>
     </div>
-    <input ngModel #amount="ngModel" type="number" id="initBalance" name="amount" [defaultValue]="0" required min="0" />
+    <input [(ngModel)]="wallet.amount" #amount="ngModel" type="number" id="initBalance" name="amount" [defaultValue]="0" required min="0" />
   </div>
   <div class="btns">
-    <button class="cancel" (click)="resetForm(walletForm)">Cancel</button>
-    <button type="submit" [disabled]="walletForm.invalid" (click)="onCreateWallet(walletForm)">Create</button>
+    <button class="cancel" (click)="onCancel(walletForm)">Cancel</button>
+    <button
+      type="submit"
+      [disabled]="walletForm.invalid"
+      (click)="editMode
+        ? onEditWallet(walletForm)
+        : onCreateWallet(walletForm)"
+    >
+      {{editMode ? "Edit" : "Create"}}
+    </button>
   </div>
 
 </form>
