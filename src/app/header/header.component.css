@@ -21,6 +21,10 @@
   color: var(--secondary-color);
 }
 
+.nav li a.active-link {
+  color: var(--accent-color);
+}
+
 .wrapper button {
   border: 2px solid var(--secondary-color);
   background: transparent;

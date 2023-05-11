@@ -17,7 +17,9 @@ export class ModalService {
   }
 
   remove(modal: ModalComponent) {
+    console.log("yolo")
     this.modals = this.modals.filter(x => x === modal)
+    console.log(this.modals)
   }
 
   open(id: string) {
