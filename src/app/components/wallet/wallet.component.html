@@ -1,1 +1,17 @@
-<p>wallet works! {{ id }}</p>
+<div class="container" *ngIf="wallet$ | async as wallet; else loading">
+  <div class="content">
+    <h1>{{ wallet.name }}</h1>
+    <span>{{ wallet.amount | currency: wallet.currency }}</span>
+    <button>Add transaction</button>
+  </div>
+  <app-modal id="create-transaction">
+
+  </app-modal>
+</div>
+<ng-template #loading>
+  <div class="container">
+    <div class="content">
+      Loading...
+    </div>
+  </div>
+</ng-template>

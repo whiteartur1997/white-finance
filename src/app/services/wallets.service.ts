@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Wallet} from "../models/wallet";
-import {BehaviorSubject, filter, map, Observable, shareReplay, tap} from "rxjs";
+import {BehaviorSubject, filter, map, Observable, pipe, shareReplay, tap} from "rxjs";
 import {AuthService} from "../auth/auth.service";
 
 @Injectable({
@@ -42,6 +42,14 @@ export class WalletsService {
         }),
         tap((wallets) => this.walletsSubject.next(wallets)),
         shareReplay()
+      )
+  }
+
+  getWallet(walletId: string): Observable<Wallet> {
+    return this.http.get<Wallet>(`${this.walletURL}/${walletId}.json`).
+      pipe(
+        shareReplay(),
+        tap(wallet => console.log(wallet))
       )
   }
 
