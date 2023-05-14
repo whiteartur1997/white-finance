@@ -1,0 +1,50 @@
+<ng-container *ngIf="categories.length > 0; else loading">
+  <div class="wrapper">
+    <h3>Create transaction</h3>
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+      <div class="form-control-wrapper">
+        <div class="amount-wrapper">
+          <span>{{ transactionForm.value.currency }}</span>
+          <input placeholder="Amount" id="amount" type="number" formControlName="amount">
+        </div>
+        <span class="error-message" *ngIf="transactionForm.get('amount')?.touched && transactionForm.get('amount')?.errors?.['required']">
+          Amount is required
+        </span>
+        <span class="error-message" *ngIf="transactionForm.get('amount')?.touched && transactionForm.get('amount')?.errors?.['min']">
+          Should be at least 0.01
+        </span>
+        <span class="error-message" *ngIf="transactionForm.get('amount')?.touched && transactionForm.get('amount')?.errors?.['max']">
+          Can be larger than balance of the wallet ({{ wallet.amount }})
+        </span>
+      </div>
+      <div class="form-control-wrapper">
+        <label for="category">Select category:</label>
+        <select id="category" formControlName="categoryId">
+          <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}({{ cat.type }})</option>
+        </select>
+        <span class="error-message" *ngIf="transactionForm.get('categoryId')?.touched && transactionForm.get('categoryId')?.errors?.['required']">
+          Category is required
+        </span>
+      </div>
+      <div class="form-control-wrapper">
+        <label for="date">Date:</label>
+        <input id="date" type="date" formControlName="date" />
+        <span class="error-message" *ngIf="transactionForm.get('date')?.touched && transactionForm.get('date')?.errors?.['required']">
+          Date is required
+        </span>
+        <span class="error-message" *ngIf="transactionForm.get('date')?.touched && transactionForm.get('date')?.errors?.['dateNotInFuture']">
+          Date can't be in the future
+        </span>
+      </div>
+      <div>
+        <button [disabled]="transactionForm.invalid"  type="submit">Create</button>
+        <button type="button" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <div class="wrapper">
+    <span>Loading categories...</span>
+  </div>
+</ng-template>

@@ -14,6 +14,8 @@ const routes: Routes = [
   {
     path: 'wallets',
     component: WalletPageComponent,
+    canActivate: [AuthGuardService],
+    canActivateChild: [AuthGuardService],
     children: [
       { path: ':id', component: WalletComponent },
       { path: '', component: WalletsListComponent }

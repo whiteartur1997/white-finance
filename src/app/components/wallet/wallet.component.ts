@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {WalletsService} from "../../services/wallets.service";
-import {Wallet} from "../../models/wallet";
-import {Observable} from "rxjs";
+import {ModalService} from "../../services/modal.service";
 
 @Component({
   selector: 'app-wallet',
@@ -10,17 +9,17 @@ import {Observable} from "rxjs";
   styleUrls: ['./wallet.component.css']
 })
 export class WalletComponent implements OnInit {
-  public wallet$: Observable<Wallet> | undefined
 
   constructor(
     private route: ActivatedRoute,
-    private walletsService: WalletsService,
+    public walletsService: WalletsService,
+    public modalService: ModalService
   ) {}
 
   ngOnInit() {
     const id = this.route.snapshot.params["id"]
     if(id) {
-      this.wallet$ = this.walletsService.getWallet(id)
+      this.walletsService.getWallet(id).subscribe()
     }
 
   }

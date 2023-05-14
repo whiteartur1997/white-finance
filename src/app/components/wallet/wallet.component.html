@@ -1,11 +1,11 @@
-<div class="container" *ngIf="wallet$ | async as wallet; else loading">
+<div class="container" *ngIf="walletsService.wallet$ | async as wallet; else loading">
   <div class="content">
     <h1>{{ wallet.name }}</h1>
     <span>{{ wallet.amount | currency: wallet.currency }}</span>
-    <button>Add transaction</button>
+    <button (click)="modalService.open('create-transaction')">Add transaction</button>
   </div>
   <app-modal id="create-transaction">
-
+    <app-create-transaction-form [wallet]="wallet"></app-create-transaction-form>
   </app-modal>
 </div>
 <ng-template #loading>

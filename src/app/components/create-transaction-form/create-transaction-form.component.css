@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.form-control-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.amount-wrapper {
+  display: flex;
+}
+
+.amount-wrapper span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border: 1px solid var(--accent-color);
+  color: var(--main-color);
+}
+
+input, select {
+  height: 30px;
+  padding: 0 16px;
+}
