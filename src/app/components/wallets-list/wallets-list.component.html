@@ -1,7 +1,11 @@
 <ul *ngIf="(walletsService.wallets$ | async) as wallets">
   <li *ngFor="let wallet of wallets">
     <div class="wallet-info">
-      <h3>{{ wallet.name }}</h3>
+      <h3>
+        <a [routerLink]="['/wallets', wallet.id]">
+          {{ wallet.name }}
+        </a>
+      </h3>
       <span>Amount: {{ wallet.amount | currency:wallet.currency }}</span>
     </div>
     <div>

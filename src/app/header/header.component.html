@@ -1,8 +1,7 @@
 <div class="wrapper">
   <ul class="nav">
-    <li><a href="">Home</a></li>
-    <li><a href="">Transactions</a></li>
-    <li><a href="">Add transaction</a></li>
+    <li><a routerLinkActive="active-link" [routerLink]="['/home']" >Home</a></li>
+    <li><a routerLinkActive="active-link" [routerLink]="['/wallets']" [routerLinkActiveOptions]="{exact: true}">Wallets</a></li>
   </ul>
   <div *ngIf="authService.isLoggedIn$ | async">
     <button (click)="authService.logout()">Logout</button>

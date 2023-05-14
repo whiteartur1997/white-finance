@@ -11,8 +11,12 @@ export class WalletsService {
 
   private readonly walletURL = 'https://white-finance-b9fce-default-rtdb.europe-west1.firebasedatabase.app/wallets'
   private walletsSubject = new BehaviorSubject<Wallet[]>([])
+  private currentWalletSubject = new BehaviorSubject<Wallet | null>(null)
+  private userId: string
+
   wallets$ = this.walletsSubject.asObservable()
-  private userId: string | undefined
+  wallet$ = this.currentWalletSubject.asObservable()
+
   constructor(
     private http: HttpClient,
     private auth: AuthService
@@ -21,7 +25,6 @@ export class WalletsService {
       filter(user => !!user),
     ).subscribe((user) => {
       if(user) {
-        console.log(user);
         this.userId = user.localId
       }
     })
@@ -45,6 +48,14 @@ export class WalletsService {
       )
   }
 
+  getWallet(walletId: string): Observable<Wallet> {
+    return this.http.get<Wallet>(`${this.walletURL}/${walletId}.json`).
+      pipe(
+        tap(wallet => this.currentWalletSubject.next(wallet)),
+        shareReplay(),
+      )
+  }
+
   createWallet(wallet: Wallet) {
     this.http.post(`${this.walletURL}.json`, { ...wallet, userId: this.userId, }).subscribe(() => {
       this.getWallets().subscribe()
@@ -52,9 +63,7 @@ export class WalletsService {
   }
 
   editWallet(wallet: Wallet) {
-    this.http.put(`${this.walletURL}/${wallet.id}.json`, {...wallet}).subscribe(() => {
-        this.getWallets().subscribe()
-    })
+    return this.http.put<Wallet>(`${this.walletURL}/${wallet.id}.json`, {...wallet})
   }
 
   deleteWallet(wallet: Wallet) {

@@ -1,7 +1,9 @@
+export type CurrencyType = "UAH" | "USD" | "EUR";
+
 export interface Wallet {
-  id?: string | number;
+  id: string;
   userId: string;
   name: string;
-  currency: "UAH" | "USD" | "EUR";
+  currency: CurrencyType;
   amount: number;
 }

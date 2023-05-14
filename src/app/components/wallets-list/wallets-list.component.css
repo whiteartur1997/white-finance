@@ -9,6 +9,11 @@ li {
   color: var(--accent-color);
 }
 
+a {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
 li:last-of-type {
   margin-bottom: 0px;
 }

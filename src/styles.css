@@ -60,6 +60,14 @@ input.ng-touched.ng-invalid {
   opacity: .5;
 }
 
+button {
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+}
+
 /* VARIABLES */
 
 :root {
