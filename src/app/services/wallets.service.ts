@@ -71,4 +71,8 @@ export class WalletsService {
       this.getWallets().subscribe()
     })
   }
+
+  resetWallet() {
+    this.currentWalletSubject.next(null)
+  }
 }

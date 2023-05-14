@@ -18,6 +18,7 @@ export class TransactionsListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log("walletId", this.walletId)
     this.transactions$ = this.transactionsService.getTransactionsByWalletId(this.walletId)
   }
 }
