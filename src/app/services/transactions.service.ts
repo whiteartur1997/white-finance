@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, combineLatest, filter} from "rxjs";
+import {BehaviorSubject, combineLatest, filter, map, shareReplay, tap} from "rxjs";
 import {Transaction} from "../models/transaction";
 import {AuthService} from "../auth/auth.service";
 import {WalletsService} from "./wallets.service";
@@ -29,6 +29,24 @@ export class TransactionsService {
         this.userId = user.localId
       }
     })
+  }
+
+  getTransactionsByWalletId(walletId: string) {
+    return this.http.get<{ [key: string]: Transaction }>(`${this.transactionURL}.json`, {
+      params: {
+        orderBy: '"walletId"',
+        equalTo: `"${walletId}"`
+      }
+    }).pipe(
+      map(transactions => {
+        return Object.entries(transactions).reduce((acc: Transaction[], [key, value]) => {
+          acc.push({ ...value, id: key })
+          return acc
+        }, [])
+      }),
+      tap(transactions => this.transactionsSubject.next(transactions)),
+      shareReplay()
+    )
   }
 
   createTransaction(transaction: Transaction, wallet: Wallet) {

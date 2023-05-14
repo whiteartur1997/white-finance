@@ -26,9 +26,7 @@ export class CreateTransactionFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.categoriesSubscription = this.categoriesService.getCategories().subscribe(categories => {
-      this.categories = categories
-    })
+    this.categoriesSubscription = this.categoriesService.categories$.subscribe(categories => this.categories = categories)
     this.transactionForm = new FormGroup({
       amount: new FormControl(undefined, [Validators.required, Validators.min(0.01), Validators.max(this.wallet.amount)]),
       categoryId: new FormControl(undefined, [Validators.required]),
@@ -36,6 +34,7 @@ export class CreateTransactionFormComponent implements OnInit, OnDestroy {
       currency: new FormControl(this.wallet.currency, { nonNullable: true }),
       date: new FormControl(new Date().toISOString().substring(0, 10), [Validators.required, dateNotInFutureValidator]),
     })
+    console.log(this.categories)
   }
 
   ngOnDestroy() {

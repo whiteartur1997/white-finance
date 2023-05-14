@@ -82,7 +82,6 @@ export class AuthService {
     const user = this.userSubject.getValue();
     if(user) {
       const timeUntilExpiration = user.expirationDateInMs - Date.now();
-      console.log(timeUntilExpiration)
       setTimeout(() => {
         this.logout();
       }, timeUntilExpiration)
