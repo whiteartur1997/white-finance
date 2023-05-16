@@ -58,4 +58,8 @@ export class TransactionsService {
       this.walletsService.getWallet(wallet.id).subscribe()
     })
   }
+
+  deleteTransaction() {
+    return this.http.delete(`${this.transactionURL}`)
+  }
 }
