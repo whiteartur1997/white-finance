@@ -43,3 +43,9 @@
 .red {
   color: red;
 }
+
+.delete-btn {
+  border: 2px solid red;
+  background: none;
+  color: red;
+}

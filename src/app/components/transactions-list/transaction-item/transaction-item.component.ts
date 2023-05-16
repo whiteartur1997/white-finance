@@ -3,6 +3,8 @@ import {Transaction} from "../../../models/transaction";
 import {CategoriesService} from "../../../services/categories.service";
 import {Category} from "../../../models/category";
 import {Subscription} from "rxjs";
+import {TransactionsService} from "../../../services/transactions.service";
+import {Wallet} from "../../../models/wallet";
 
 @Component({
   selector: 'app-transaction-item',
@@ -10,17 +12,21 @@ import {Subscription} from "rxjs";
   styleUrls: ['./transaction-item.component.css']
 })
 export class TransactionItemComponent implements OnInit, OnDestroy {
+  @Input() wallet: Wallet;
   @Input() transaction: Transaction;
   transactionDate: Date;
   transactionCategory: Category | undefined;
+  categories: Category[]
   categoriesSub: Subscription;
 
   constructor(
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private transactionsService: TransactionsService
   ) {}
 
   ngOnInit() {
     this.categoriesSub = this.categoriesService.categories$.subscribe(categories => {
+      this.categories = categories;
       this.transactionCategory = categories.find(cat => cat.id === this.transaction.categoryId)
     })
     this.transactionDate = new Date(this.transaction.date)
@@ -28,5 +34,11 @@ export class TransactionItemComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.categoriesSub.unsubscribe()
+  }
+
+  onDeleteTransaction(transaction: Transaction) {
+    const expenseType = this.categories.find(cat => cat.id === this.transaction.categoryId)?.type;
+    const expenseAmount = transaction.amount;
+    this.transactionsService.deleteTransaction(transaction.id, {...this.wallet, amount: expenseType === "expense" ? this.wallet.amount + expenseAmount : this.wallet.amount - expenseAmount})
   }
 }
