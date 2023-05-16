@@ -34,7 +34,6 @@ export class CreateTransactionFormComponent implements OnInit, OnDestroy {
       currency: new FormControl(this.wallet.currency, { nonNullable: true }),
       date: new FormControl(new Date().toISOString().substring(0, 10), [Validators.required, dateNotInFutureValidator]),
     })
-    console.log(this.categories)
   }
 
   ngOnDestroy() {
@@ -44,7 +43,9 @@ export class CreateTransactionFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     const expenseType = this.categories.find(cat => cat.id === this.transactionForm.value.categoryId)?.type;
     const expenseAmount = this.transactionForm.value.amount;
+    // TODO - think about util function
     this.transactionsService.createTransaction(this.transactionForm.value, {...this.wallet, amount: expenseType === "expense" ? this.wallet.amount - expenseAmount : this.wallet.amount + expenseAmount})
+    this.transactionForm.reset()
     this.modalService.close()
   }
 

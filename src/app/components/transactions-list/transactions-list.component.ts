@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TransactionsService} from "../../services/transactions.service";
-import {Transaction} from "../../models/transaction";
-import {Observable} from "rxjs";
+import {Wallet} from "../../models/wallet";
 
 @Component({
   selector: 'app-transactions-list',
@@ -9,16 +8,13 @@ import {Observable} from "rxjs";
   styleUrls: ['./transactions-list.component.css']
 })
 export class TransactionsListComponent implements OnInit {
-  @Input() walletId: string
-
-  transactions$: Observable<Transaction[]>
+  @Input() wallet: Wallet;
 
   constructor(
-    private transactionsService: TransactionsService
+    public transactionsService: TransactionsService
   ) {}
 
   ngOnInit() {
-    console.log("walletId", this.walletId)
-    this.transactions$ = this.transactionsService.getTransactionsByWalletId(this.walletId)
+    this.transactionsService.getTransactionsByWalletId(this.wallet.id).subscribe()
   }
 }

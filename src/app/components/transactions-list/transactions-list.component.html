@@ -1,5 +1,5 @@
-<div class="wrapper" *ngIf="(transactions$ | async) as transactions; else loadingTransactions">
-  <app-transaction-item [transaction]="transaction" *ngFor="let transaction of transactions"></app-transaction-item>
+<div class="wrapper" *ngIf="(transactionsService.transactions$ | async) as transactions; else loadingTransactions">
+  <app-transaction-item [wallet]="wallet" [transaction]="transaction" *ngFor="let transaction of transactions"></app-transaction-item>
 </div>
 <ng-template #loadingTransactions>
   <div class="wrapper">

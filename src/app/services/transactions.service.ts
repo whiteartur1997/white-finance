@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, combineLatest, filter, map, shareReplay, tap} from "rxjs";
+import {BehaviorSubject, combineLatest, filter, map, Observable, shareReplay, tap} from "rxjs";
 import {Transaction} from "../models/transaction";
 import {AuthService} from "../auth/auth.service";
 import {WalletsService} from "./wallets.service";
@@ -51,15 +51,23 @@ export class TransactionsService {
 
   createTransaction(transaction: Transaction, wallet: Wallet) {
     const createTransaction$ = this.http.post<Transaction>(`${this.transactionURL}.json`, { ...transaction, userId: this.userId  })
-    const updateWalletBalance$ = this.walletsService.editWallet(wallet)
 
-    const combined$ = combineLatest([createTransaction$, updateWalletBalance$])
-    combined$.subscribe(([_, wallet]) => {
-      this.walletsService.getWallet(wallet.id).subscribe()
-    })
+    this.reflectChangesInTransactionAndWallet(createTransaction$, wallet)
   }
 
-  deleteTransaction() {
-    return this.http.delete(`${this.transactionURL}`)
+  deleteTransaction(transactionId: string, wallet: Wallet) {
+    const deleteTransaction$ = this.http.delete(`${this.transactionURL}/${transactionId}.json`)
+
+    this.reflectChangesInTransactionAndWallet(deleteTransaction$, wallet)
+  }
+
+  private reflectChangesInTransactionAndWallet(transactionObs$: Observable<any>, wallet: Wallet) {
+    const updateWalletBalance$ = this.walletsService.editWallet(wallet)
+
+    const combined$ = combineLatest([transactionObs$, updateWalletBalance$])
+    combined$.subscribe(([_, wallet]) => {
+      this.walletsService.getWallet(wallet.id).subscribe()
+      this.getTransactionsByWalletId(wallet.id).subscribe()
+    })
   }
 }

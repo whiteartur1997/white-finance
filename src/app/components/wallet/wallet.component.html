@@ -3,7 +3,7 @@
     <h1>{{ wallet.name }}</h1>
     <span>{{ wallet.amount | currency: wallet.currency }}</span>
     <button (click)="modalService.open('create-transaction')">Add transaction</button>
-    <app-transactions-list [walletId]="wallet.id"></app-transactions-list>
+    <app-transactions-list [wallet]="wallet"></app-transactions-list>
   </div>
   <app-modal id="create-transaction">
     <app-create-transaction-form [wallet]="wallet"></app-create-transaction-form>
