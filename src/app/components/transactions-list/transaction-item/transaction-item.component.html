@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <div class="left-side">
+    <img [src]="transactionCategory?.imageUrl" [alt]="transactionCategory?.name" />
+    <div class="general-info">
+      <div>
+        <h4>{{ transactionCategory?.name }}</h4>
+        <span>{{ transactionDate | date:'mediumDate' }}</span>
+      </div>
+      <span [ngClass]="transactionCategory?.type === 'expense' ? 'green' : 'red'">{{ transaction.amount | currency:transaction.currency }}</span>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="edit-btn">Edit</button>
+    <button class="delete-btn">Delete</button>
+  </div>
+</div>

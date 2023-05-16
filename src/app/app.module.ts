@@ -16,6 +16,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { WalletComponent } from './components/wallet/wallet.component';
 import { WalletPageComponent } from './components/wallet-page/wallet-page.component';
 import { CreateTransactionFormComponent } from './components/create-transaction-form/create-transaction-form.component';
+import { TransactionsListComponent } from './components/transactions-list/transactions-list.component';
+import { TransactionItemComponent } from './components/transactions-list/transaction-item/transaction-item.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { CreateTransactionFormComponent } from './components/create-transaction-
     WalletComponent,
     WalletPageComponent,
     CreateTransactionFormComponent,
+    TransactionsListComponent,
+    TransactionItemComponent,
   ],
   imports: [
     BrowserModule,

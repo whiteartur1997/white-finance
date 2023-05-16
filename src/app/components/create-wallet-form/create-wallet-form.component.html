@@ -1,4 +1,4 @@
-<form #walletForm="ngForm">
+<form #walletForm="ngForm" (ngSubmit)="editMode ? onEditWallet(walletForm) : onCreateWallet(walletForm)">
   <div class="formControl">
     <div class="formControlLabel">
       <label for="name">Name</label>
@@ -44,9 +44,6 @@
     <button
       type="submit"
       [disabled]="walletForm.invalid"
-      (click)="editMode
-        ? onEditWallet(walletForm)
-        : onCreateWallet(walletForm)"
     >
       {{editMode ? "Edit" : "Create"}}
     </button>

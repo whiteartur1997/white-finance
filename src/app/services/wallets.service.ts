@@ -51,6 +51,7 @@ export class WalletsService {
   getWallet(walletId: string): Observable<Wallet> {
     return this.http.get<Wallet>(`${this.walletURL}/${walletId}.json`).
       pipe(
+        map((wallet) => ({...wallet, id: walletId})),
         tap(wallet => this.currentWalletSubject.next(wallet)),
         shareReplay(),
       )
@@ -70,5 +71,10 @@ export class WalletsService {
     this.http.delete(`${this.walletURL}/${wallet.id}.json`).subscribe(() => {
       this.getWallets().subscribe()
     })
+  }
+
+  resetWallet() {
+    this.currentWalletSubject.next(null)
+    this.wallet$.subscribe(val => console.log("dd", val))
   }
 }

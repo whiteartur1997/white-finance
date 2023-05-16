@@ -30,9 +30,11 @@ export class CreateWalletFormComponent implements OnInit, OnDestroy {
   }
 
   onEditWallet(walletForm: NgForm) {
-    this.walletsService.editWallet({...this.wallet, ...walletForm.value})
-    this.walletWasEdited.emit()
-    this.modalService.close()
+    this.walletsService.editWallet({...this.wallet, ...walletForm.value}).subscribe(() => {
+      this.walletsService.getWallets().subscribe()
+      this.walletWasEdited.emit()
+      this.modalService.close()
+    })
   }
 
   ngOnInit() {
