@@ -3,7 +3,12 @@
     <h1>{{ wallet.name }}</h1>
     <span>{{ wallet.amount | currency: wallet.currency }}</span>
     <button (click)="modalService.open('create-transaction')">Add transaction</button>
-    <app-transactions-list [wallet]="wallet"></app-transactions-list>
+    <ng-container *ngIf="(listOfDaysAndTransactions$ | async) as listOfDaysAndTransactions; else loadingTransactions">
+      <div class="transactions-block" *ngFor="let dayAndTransaction of listOfDaysAndTransactions">
+        <h4>{{ dayAndTransaction.date | date:"mediumDate"  }}</h4>
+        <app-transactions-list [transactions]="dayAndTransaction.transactions" [wallet]="wallet"></app-transactions-list>
+      </div>
+    </ng-container>
   </div>
   <app-modal id="create-transaction">
     <app-create-transaction-form [editMode]="(isEditedTransactionPresented() | async) ?? false" [wallet]="wallet"></app-create-transaction-form>
@@ -13,6 +18,13 @@
   <div class="container">
     <div class="content">
       Loading...
+    </div>
+  </div>
+</ng-template>
+<ng-template #loadingTransactions>
+  <div class="container">
+    <div class="content">
+      Loading transactions...
     </div>
   </div>
 </ng-template>
