@@ -19,6 +19,7 @@ import { CreateTransactionFormComponent } from './components/create-transaction-
 import { TransactionsListComponent } from './components/transactions-list/transactions-list.component';
 import { TransactionItemComponent } from './components/transactions-list/transaction-item/transaction-item.component';
 import { TwoDigitDecimalDirectiveDirective } from './directives/two-digit-decimal-directive.directive';
+import { CollapseDirective } from './directives/collapse.directive';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TwoDigitDecimalDirectiveDirective } from './directives/two-digit-decima
     TransactionsListComponent,
     TransactionItemComponent,
     TwoDigitDecimalDirectiveDirective,
+    CollapseDirective,
   ],
   imports: [
     BrowserModule,

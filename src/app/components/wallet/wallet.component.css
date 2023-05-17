@@ -18,7 +18,14 @@ button {
 }
 
 .transactions-block {
+  max-height: 500px;
   margin-bottom: 24px;
+  transition: all .3s ease-in;
+}
+
+.transactions-block.collapse {
+  max-height: 30px;
+  overflow: hidden;
 }
 
 .transactions-block h4 {
