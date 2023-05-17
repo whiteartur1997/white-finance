@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { HeaderComponent } from './components/header/header.component';
 import { CreateWalletFormComponent } from './components/create-wallet-form/create-wallet-form.component';
 import { WalletsListComponent } from './components/wallets-list/wallets-list.component';
 import {AuthInterceptorService} from "./services/auth-interceptor.service";
@@ -18,6 +18,7 @@ import { WalletPageComponent } from './components/wallet-page/wallet-page.compon
 import { CreateTransactionFormComponent } from './components/create-transaction-form/create-transaction-form.component';
 import { TransactionsListComponent } from './components/transactions-list/transactions-list.component';
 import { TransactionItemComponent } from './components/transactions-list/transaction-item/transaction-item.component';
+import { TwoDigitDecimalDirectiveDirective } from './directives/two-digit-decimal-directive.directive';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { TransactionItemComponent } from './components/transactions-list/transac
     CreateTransactionFormComponent,
     TransactionsListComponent,
     TransactionItemComponent,
+    TwoDigitDecimalDirectiveDirective,
   ],
   imports: [
     BrowserModule,

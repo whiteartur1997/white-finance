@@ -11,8 +11,10 @@ import {ModalService} from "../../services/modal.service";
   styleUrls: ['./create-wallet-form.component.css']
 })
 export class CreateWalletFormComponent implements OnInit, OnDestroy {
+  private defaultWalletValues = { name: '', currency: 'UAH', amount: undefined }
+
   @Input() editMode = false;
-  @Input() wallet: Partial<Wallet> = { name: '', currency: 'UAH', amount: 0 };
+  @Input() wallet: Partial<Wallet> = this.defaultWalletValues as unknown as Wallet;
   @Output() walletWasEdited = new EventEmitter();
   currency = "UAH";
   walletsSub: Subscription | undefined
@@ -25,12 +27,12 @@ export class CreateWalletFormComponent implements OnInit, OnDestroy {
   }
 
   onCreateWallet(walletForm: NgForm) {
-    this.walletsService.createWallet(walletForm.value)
+    this.walletsService.createWallet({...walletForm.value, amount: +walletForm.value.amount})
     this.onCancel(walletForm);
   }
 
   onEditWallet(walletForm: NgForm) {
-    this.walletsService.editWallet({...this.wallet, ...walletForm.value}).subscribe(() => {
+    this.walletsService.editWallet({...this.wallet, ...walletForm.value, amount: +walletForm.value.amount}).subscribe(() => {
       this.walletsService.getWallets().subscribe()
       this.walletWasEdited.emit()
       this.modalService.close()
@@ -51,6 +53,6 @@ export class CreateWalletFormComponent implements OnInit, OnDestroy {
   }
 
   onCancel(walletForm: NgForm) {
-    !this.editMode ? walletForm.resetForm({ name: '', currency: 'UAH', amount: 0 }) : this.modalService.close()
+    !this.editMode ? walletForm.resetForm(this.defaultWalletValues) : this.modalService.close()
   }
 }
