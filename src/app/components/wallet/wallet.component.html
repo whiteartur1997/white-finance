@@ -6,7 +6,7 @@
     <app-transactions-list [wallet]="wallet"></app-transactions-list>
   </div>
   <app-modal id="create-transaction">
-    <app-create-transaction-form [wallet]="wallet"></app-create-transaction-form>
+    <app-create-transaction-form [editMode]="(isEditedTransactionPresented() | async) ?? false" [wallet]="wallet"></app-create-transaction-form>
   </app-modal>
 </div>
 <ng-template #loading>

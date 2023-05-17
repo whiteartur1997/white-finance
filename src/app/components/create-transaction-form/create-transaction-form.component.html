@@ -1,6 +1,6 @@
 <ng-container *ngIf="categories.length > 0; else loading">
   <div class="wrapper">
-    <h3>Create transaction</h3>
+    <h3>{{editMode ? "Edit" : "Create" }} transaction</h3>
     <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
       <div class="form-control-wrapper">
         <div class="amount-wrapper">
@@ -37,7 +37,7 @@
         </span>
       </div>
       <div>
-        <button [disabled]="transactionForm.invalid"  type="submit">Create</button>
+        <button [disabled]="transactionForm.invalid"  type="submit">{{ editMode ? "Edit" : "Create" }}</button>
         <button type="button" (click)="onCancel()">Cancel</button>
       </div>
     </form>

@@ -20,11 +20,12 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.modalService.add(this);
     document.body.appendChild(this.element)
 
-    this.element.addEventListener('click', (el: any) => {
-      if(el.target.className === 'modal') {
-        this.close()
-      }
-    })
+    // TODO - think about the good way to reset all forms if we close modal is such way
+    // this.element.addEventListener('click', (el: any) => {
+    //   if(el.target.className === 'modal') {
+    //     this.close()
+    //   }
+    // })
   }
 
   ngOnDestroy() {
