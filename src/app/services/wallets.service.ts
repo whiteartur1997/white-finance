@@ -64,7 +64,7 @@ export class WalletsService {
   }
 
   editWallet(wallet: Wallet) {
-    return this.http.put<Wallet>(`${this.walletURL}/${wallet.id}.json`, {...wallet})
+    return this.http.put<Wallet>(`${this.walletURL}/${wallet.id}.json`, wallet)
   }
 
   deleteWallet(wallet: Wallet) {
@@ -75,6 +75,5 @@ export class WalletsService {
 
   resetWallet() {
     this.currentWalletSubject.next(null)
-    this.wallet$.subscribe(val => console.log("dd", val))
   }
 }

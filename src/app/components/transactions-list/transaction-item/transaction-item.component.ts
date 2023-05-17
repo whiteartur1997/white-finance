@@ -5,6 +5,7 @@ import {Category} from "../../../models/category";
 import {Subscription} from "rxjs";
 import {TransactionsService} from "../../../services/transactions.service";
 import {Wallet} from "../../../models/wallet";
+import {ModalService} from "../../../services/modal.service";
 
 @Component({
   selector: 'app-transaction-item',
@@ -21,6 +22,7 @@ export class TransactionItemComponent implements OnInit, OnDestroy {
 
   constructor(
     private categoriesService: CategoriesService,
+    private modalService: ModalService,
     private transactionsService: TransactionsService
   ) {}
 
@@ -34,6 +36,11 @@ export class TransactionItemComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.categoriesSub.unsubscribe()
+  }
+
+  onEditTransaction(transaction: Transaction) {
+    this.transactionsService.setCurrentTransaction(transaction)
+    this.modalService.open('create-transaction')
   }
 
   onDeleteTransaction(transaction: Transaction) {

@@ -13,7 +13,11 @@ export class TransactionsService {
 
   private readonly transactionURL = 'https://white-finance-b9fce-default-rtdb.europe-west1.firebasedatabase.app/transactions'
   private transactionsSubject = new BehaviorSubject<Transaction[]>([])
+  private currentTransactionSubject = new BehaviorSubject<Transaction | null>(null)
+
   transactions$ = this.transactionsSubject.asObservable()
+  transaction$ = this.currentTransactionSubject.asObservable()
+
   private userId: string
 
   constructor(
@@ -55,10 +59,24 @@ export class TransactionsService {
     this.reflectChangesInTransactionAndWallet(createTransaction$, wallet)
   }
 
+  editTransaction(transaction: Transaction, wallet: Wallet) {
+    const editTransaction$ = this.http.put<Transaction>(`${this.transactionURL}/${transaction.id}.json`, transaction)
+
+    this.reflectChangesInTransactionAndWallet(editTransaction$, wallet)
+  }
+
   deleteTransaction(transactionId: string, wallet: Wallet) {
     const deleteTransaction$ = this.http.delete(`${this.transactionURL}/${transactionId}.json`)
 
     this.reflectChangesInTransactionAndWallet(deleteTransaction$, wallet)
+  }
+
+  setCurrentTransaction(transaction: Transaction) {
+    this.currentTransactionSubject.next(transaction)
+  }
+
+  resetCurrentTransaction() {
+    this.currentTransactionSubject.next(null)
   }
 
   private reflectChangesInTransactionAndWallet(transactionObs$: Observable<any>, wallet: Wallet) {

@@ -2,7 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {WalletsService} from "../../services/wallets.service";
 import {ModalService} from "../../services/modal.service";
-import {Subscription} from "rxjs";
+import {map, Subscription} from "rxjs";
+import {TransactionsService} from "../../services/transactions.service";
 
 @Component({
   selector: 'app-wallet',
@@ -16,7 +17,8 @@ export class WalletComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     public walletsService: WalletsService,
-    public modalService: ModalService
+    public modalService: ModalService,
+    private transactionsService: TransactionsService
   ) {}
 
   ngOnInit() {
@@ -24,6 +26,12 @@ export class WalletComponent implements OnInit, OnDestroy {
       this.id = params['id'];
       this.walletsService.getWallet(this.id).subscribe();
     });
+  }
+
+  isEditedTransactionPresented() {
+    return this.transactionsService.transaction$.pipe(
+      map(transaction => Boolean(transaction))
+    )
   }
 
   ngOnDestroy() {
