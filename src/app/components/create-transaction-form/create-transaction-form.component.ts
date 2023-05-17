@@ -48,7 +48,8 @@ export class CreateTransactionFormComponent implements OnInit, OnDestroy, OnChan
 
   onSubmit() {
     const transactionType = this.categories.find(cat => cat.id === this.transactionForm.value.categoryId)?.type;
-    const transactionAmount = this.transactionForm.value.amount;
+    const transactionAmount = +this.transactionForm.value.amount;
+    console.log(transactionAmount)
     // TODO - think about util function
     if(this.editMode && this.transaction) {
       const transactionBeforeUpdateType = this.categories.find(cat => cat.id === this.transaction?.categoryId)?.type;

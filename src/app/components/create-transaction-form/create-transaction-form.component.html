@@ -5,7 +5,7 @@
       <div class="form-control-wrapper">
         <div class="amount-wrapper">
           <span>{{ transactionForm.value.currency }}</span>
-          <input placeholder="Amount" id="amount" type="number" formControlName="amount">
+          <input appTwoDigitDecimalDirective placeholder="Amount" id="amount" type="text" formControlName="amount">
         </div>
         <span class="error-message" *ngIf="transactionForm.get('amount')?.touched && transactionForm.get('amount')?.errors?.['required']">
           Amount is required

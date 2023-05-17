@@ -37,7 +37,7 @@
         <span *ngIf="amount.errors?.['min']">Should be not less than 0</span>
       </ng-container>
     </div>
-    <input [(ngModel)]="wallet.amount" #amount="ngModel" type="number" id="initBalance" name="amount" [defaultValue]="0" required min="0" />
+    <input appTwoDigitDecimalDirective [(ngModel)]="wallet.amount" #amount="ngModel" type="text" id="initBalance" name="amount" required min="0" />
   </div>
   <div class="btns">
     <button class="cancel" (click)="onCancel(walletForm)">Cancel</button>
