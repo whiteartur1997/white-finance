@@ -4,8 +4,8 @@
     <span>{{ wallet.amount | currency: wallet.currency }}</span>
     <button (click)="modalService.open('create-transaction')">Add transaction</button>
     <ng-container *ngIf="(listOfDaysAndTransactions$ | async) as listOfDaysAndTransactions; else loadingTransactions">
-      <div class="transactions-block" *ngFor="let dayAndTransaction of listOfDaysAndTransactions">
-        <h4>{{ dayAndTransaction.date | date:"mediumDate"  }}</h4>
+      <div appCollapse class="transactions-block" *ngFor="let dayAndTransaction of listOfDaysAndTransactions">
+        <h4 data-collapsetrigger="true">{{ dayAndTransaction.date | date:"mediumDate"  }}</h4>
         <app-transactions-list [transactions]="dayAndTransaction.transactions" [wallet]="wallet"></app-transactions-list>
       </div>
     </ng-container>
